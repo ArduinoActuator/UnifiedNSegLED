@@ -1,23 +1,29 @@
 # UnifiedNSegLED
 
+Arduinoに接続するアクチュエータのAPIを統一するためのHardware Abstraction Layer(HAL)を集めています．ただし，HALは
+IoTの端末として用いることを前提にしているため，
+ネットワーク経由で制御命令を送るだけの使い方を想定しており，
+対話的に使う必要がある機能はサポートしていません．
 
-## 外部リンク
+
+## サポートしているLED
+
+- [超大型赤色16セグメントLED表示器 アノードコモン アノード共通接続 A-2308SR][A2308SR]
+- [赤色2桁LED表示器 14セグメント+Dp OSL20541-IR][OSL20541IR]
+- [3桁7セグメントLED表示器 赤色 アノードコモン OSL30561-IRA][OSL30561IRA]
+- [Grove - 4-Digit Display][Grove4DigitLED]
+
+
+
+<!-- 以下は，外部リンクの定義 
 - Adafruit Unified Sensor Driver - [https://github.com/adafruit/Adafruit_Sensor][AdafruitUSD]
-- Groveシールド - [https://www.seeedstudio.com/Base-Shield-V2-p-1378.html][shield]
-- Arduino M0 Pro - [https://store.arduino.cc/usa/arduino-m0-pro][M0Pro]
-- Arduino Due - [https://store.arduino.cc/usa/arduino-due][Due]
-- Arduino Uno R3 - [https://store.arduino.cc/usa/arduino-uno-rev3][Uno]
-- Arduino Uno WiFi - [https://store.arduino.cc/usa/arduino-uno-wifi-rev2][UnoWiFi]
-- Arduino Leonardo Ethernet - [https://store.arduino.cc/usa/arduino-leonardo-eth][LeonardoEth]
-- Arduino Mega2560 R3 - [https://store.arduino.cc/usa/arduino-mega-2560-rev3][Mega]
-- Arduino Pro mini 328 - 3.3V/8MHz - [https://www.sparkfun.com/products/11114][ProMini]
-- ESPr developer - [https://www.switch-science.com/catalog/2652/][ESPrDev]
-- ESPr Developer用GROVEシールド - [https://www.switch-science.com/catalog/2811/][ESPrDevShield]
-- ESPr one 32 - [https://www.switch-science.com/catalog/3555/][ESPrOne32]
-- Grove - [https://www.seeedstudio.io/category/Grove-c-1003.html][Grove]
-- Seed Studio - [https://www.seeedstudio.io/][SeedStudio]
-- Sparkfun Electronics - [https://www.sparkfun.com/][Sparkfun]
-- スイッチサイエンス - [https://www.switch-science.com/][SwitchScience]
+-->
+
+<!-- 以下は，外部リンクの定義 -->
+[A2308SR]:https://akizukidenshi.com/catalog/g/g104440/ <!-- 16セグLED -->
+[OSL20541IR]:https://akizukidenshi.com/catalog/g/g116389/ <!-- 2桁 14セグLED + 2*コンマ -->
+[OSL30561IRA]:https://akizukidenshi.com/catalog/g/g117364/ <!-- 3桁 7セグLED + 3*コンマ -->
+[Grove4DigitLED]:https://wiki.seeedstudio.com/Grove-4-Digit_Display/ <!-- 4桁 7セグLED + 1*コロン -->
 
 <!-- 以下は，外部リンクの定義 -->
 [GroveBarometerSensorBMP180]:http://wiki.seeedstudio.com/Grove-Barometer_Sensor-BMP180/
