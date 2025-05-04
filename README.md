@@ -19,11 +19,14 @@ IoTの端末として用いることを前提にしているため，
 - Adafruit Unified Sensor Driver - [https://github.com/adafruit/Adafruit_Sensor][AdafruitUSD]
 -->
 
-<!-- 以下は，外部リンクの定義 -->
-[A2308SR]:https://akizukidenshi.com/catalog/g/g104440/ <!-- 16セグLED -->
-[OSL20541IR]:https://akizukidenshi.com/catalog/g/g116389/ <!-- 2桁 14セグLED + 2*コンマ -->
-[OSL30561IRA]:https://akizukidenshi.com/catalog/g/g117364/ <!-- 3桁 7セグLED + 3*コンマ -->
-[Grove4DigitLED]:https://wiki.seeedstudio.com/Grove-4-Digit_Display/ <!-- 4桁 7セグLED + 1*コロン -->
+<!-- 16セグLED -->
+[A2308SR]:https://akizukidenshi.com/catalog/g/g104440/
+<!-- 2桁 14セグLED + 2*コンマ -->
+[OSL20541IR]:https://akizukidenshi.com/catalog/g/g116389/
+<!-- 3桁 7セグLED + 3*コンマ -->
+[OSL30561IRA]:https://akizukidenshi.com/catalog/g/g117364/
+<!-- 4桁 7セグLED + 1*コロン -->
+[Grove4DigitLED]:https://wiki.seeedstudio.com/Grove-4-Digit_Display/
 
 <!-- 以下は，外部リンクの定義 -->
 [GroveBarometerSensorBMP180]:http://wiki.seeedstudio.com/Grove-Barometer_Sensor-BMP180/
