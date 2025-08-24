@@ -6,18 +6,18 @@
 #include "OSL30561.h"
 #include "TM1637.h"
 
-enum UnifiedNSegLedType {
+typedef enum {
   OSL12306_16_TYPE =1,
   OSL20541_TYPE,
   OSL30561_TYPE,
   GROVE_TM1637_TYPE
-};
+} UnifiedNSegLedType;
 
-enum nSegLedFunctionReturnValue {
-  FUNCTION_UNSUPPORTED = 1,
-  FUNCTION_SUCCESS,
-  FUNCTION_FAIL,
-};
+typedef enum {
+  NSEGLED_FUNCTION_UNSUPPORTED = 1,
+  NSEGLED_FUNCTION_SUCCESS,
+  NSEGLED_FUNCTION_FAIL,
+} nSegLedFunctionReturnValue;
 
 class UnifiedNSegLED {
 public:

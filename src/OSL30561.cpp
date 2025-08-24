@@ -38,21 +38,24 @@ void OSL30561::begin(void) {
 uint8_t OSL30561::displayOne(uint8_t n, bool point, char dispChar) {
   if (n>_num_digits-1) return _OSL30561_FUNCTION_FAIL;
   uint8_t pinState = encode(dispChar);
-  for (int i= _OSL30561_CHAR_PINS -1; i>=0; i--) {
-    if ((0b1 & pinState) > 0) {
-      if (_pin_mode == OSL30561_TYPE_CATHODE_COMMON) {
-        digitalWrite(_char_pin[i],HIGH);
+  if (pinState == _OSL30561_FUNCTION_FAIL) return _OSL30561_FUNCTION_FAIL;
+  if (pinState != 0 ) {
+    for (int i= _OSL30561_CHAR_PINS -1; i>=0; i--) {
+      if ((0b1 & pinState) > 0) {
+        if (_pin_mode == OSL30561_TYPE_CATHODE_COMMON) {
+          digitalWrite(_char_pin[i],HIGH);
+        } else {
+          digitalWrite(_char_pin[i],LOW);
+        }
       } else {
-        digitalWrite(_char_pin[i],LOW);
+        if (_pin_mode == OSL30561_TYPE_CATHODE_COMMON) {
+          digitalWrite(_char_pin[i],LOW);
+        } else {
+          digitalWrite(_char_pin[i],HIGH);
+        }
       }
-    } else {
-      if (_pin_mode == OSL30561_TYPE_CATHODE_COMMON) {
-        digitalWrite(_char_pin[i],LOW);
-      } else {
-        digitalWrite(_char_pin[i],HIGH);
-      }
+      pinState = pinState >> 1;
     }
-    pinState = pinState >> 1;
   }
   if (point) {
     pointOn();
@@ -154,6 +157,7 @@ uint8_t OSL30561::clear(void) {
 
 uint8_t OSL30561::encode(char charactor){
   uint8_t charMap[17] = { 0b0000001, 0b1111110, 0b0110000, 0b1101101, 0b1111001, 0b0110011, 0b1011011, 0b1011111, 0b1110010, 0b1111111, 0b1111011, 0b1110111, 0b0011111, 0b1001110, 0b0111101, 0b1001111, 0b1000111};
+  if (charactor == 0 ) return 0;
   switch(charactor) {
     case '-' : return charMap[0];
     case '0' : return charMap[1];

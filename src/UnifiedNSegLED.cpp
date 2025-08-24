@@ -25,30 +25,32 @@ nSegLedFunctionReturnValue UnifiedNSegLED::begin(void) {
   switch(_type) {
     case OSL12306_16_TYPE:
       _osl12306_16->begin();
-      return FUNCTION_SUCCESS;
+      return NSEGLED_FUNCTION_SUCCESS;
     case OSL20541_TYPE:
       _osl20541->begin();
-      return FUNCTION_SUCCESS;
+      return NSEGLED_FUNCTION_SUCCESS;
     case OSL30561_TYPE:
       _osl30561->begin();
-      return FUNCTION_SUCCESS;
+      return NSEGLED_FUNCTION_SUCCESS;
     case GROVE_TM1637_TYPE:
       _tm1637->init();
-      return FUNCTION_SUCCESS;
+      return NSEGLED_FUNCTION_SUCCESS;
   }
-  return FUNCTION_UNSUPPORTED;
+  return NSEGLED_FUNCTION_UNSUPPORTED;
 }
+
 
 #define _FUNCTION_FAIL       0
 #define _FUNCTION_SUCCESS    1
 #define _FUNCTION_UNSUPPORT  2
 
+
 nSegLedFunctionReturnValue UnifiedNSegLED::analyzeRstValue(uint8_t val) {
   switch(val) {
-    case _FUNCTION_SUCCESS: return FUNCTION_SUCCESS;
-    case _FUNCTION_UNSUPPORT: return FUNCTION_UNSUPPORTED;
+    case _FUNCTION_SUCCESS: return NSEGLED_FUNCTION_SUCCESS;
+    case _FUNCTION_UNSUPPORT: return NSEGLED_FUNCTION_UNSUPPORTED;
   }
-  return FUNCTION_FAIL;
+  return NSEGLED_FUNCTION_FAIL;
 }
 
 nSegLedFunctionReturnValue UnifiedNSegLED::clear(void) {
@@ -65,9 +67,9 @@ nSegLedFunctionReturnValue UnifiedNSegLED::clear(void) {
       return analyzeRstValue(rst);
     case GROVE_TM1637_TYPE:
       _tm1637->clearDisplay();
-      return FUNCTION_SUCCESS;
+      return NSEGLED_FUNCTION_SUCCESS;
   }
-  return FUNCTION_UNSUPPORTED;
+  return NSEGLED_FUNCTION_UNSUPPORTED;
 }
 
 nSegLedFunctionReturnValue UnifiedNSegLED::display(uint64_t points, char dispData[]) {
@@ -83,7 +85,7 @@ nSegLedFunctionReturnValue UnifiedNSegLED::display(uint64_t points, char dispDat
       rst = _osl30561->display(points, dispData);
       return analyzeRstValue(rst);
   }
-  return FUNCTION_UNSUPPORTED;
+  return NSEGLED_FUNCTION_UNSUPPORTED;
 }
 
 int8_t UnifiedNSegLED::convChar(char data) {
@@ -115,24 +117,24 @@ int8_t UnifiedNSegLED::convChar(char data) {
 }
 
 nSegLedFunctionReturnValue UnifiedNSegLED::display(char dispData[]) {
-  if (_type != GROVE_TM1637_TYPE) return FUNCTION_UNSUPPORTED;
+  if (_type != GROVE_TM1637_TYPE) return NSEGLED_FUNCTION_UNSUPPORTED;
   for (int i=0; i< 4 ; i++) {
     int8_t data = convChar(dispData[i]);
     if (-1 != data ) {
       _tm1637->display(i,data);
     }
   }
-  return FUNCTION_SUCCESS;
+  return NSEGLED_FUNCTION_SUCCESS;
 }
 
 nSegLedFunctionReturnValue UnifiedNSegLED::set(uint8_t brightness,uint8_t SetData,uint8_t SetAddr) {
-  if (_type != GROVE_TM1637_TYPE) return FUNCTION_UNSUPPORTED;
+  if (_type != GROVE_TM1637_TYPE) return NSEGLED_FUNCTION_UNSUPPORTED;
   _tm1637->set(brightness, SetData, SetAddr);
-  return FUNCTION_SUCCESS;
+  return NSEGLED_FUNCTION_SUCCESS;
 }
 
 nSegLedFunctionReturnValue UnifiedNSegLED::setColomn(bool flag) {
-  if (_type != GROVE_TM1637_TYPE) return FUNCTION_UNSUPPORTED;
+  if (_type != GROVE_TM1637_TYPE) return NSEGLED_FUNCTION_UNSUPPORTED;
   _tm1637->point(flag);
-  return FUNCTION_SUCCESS;
+  return NSEGLED_FUNCTION_SUCCESS;
 }

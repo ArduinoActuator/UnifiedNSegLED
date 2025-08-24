@@ -11,7 +11,8 @@ OSL12306_16  https://akizukidenshi.com/catalog/g/g114656/
 #define _OSL12306_16_PULL_UP   0
 #define _OSL12306_16_PULL_DOWN 1
 
-#define _OSL12306_16_FUNCTION_FAIL       0
+//#define _OSL12306_16_FUNCTION_FAIL       0
+#define _OSL12306_16_FUNCTION_FAIL      -1
 #define _OSL12306_16_FUNCTION_SUCCESS    1
 #define _OSL12306_16_FUNCTION_UNSUPPORT  2
 

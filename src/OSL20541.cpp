@@ -25,21 +25,24 @@ void OSL20541::begin(void) {
 uint8_t OSL20541::displayOne(uint8_t n, bool point, char dispChar) {
   if (n>_num_digits-1) return _OSL20541_FUNCTION_FAIL;
   uint16_t pinState = encode(dispChar);
-  for (int i= _OSL20541_CHAR_PINS -1; i>=0; i--) {
-    if ((0b1 & pinState) > 0) {
-      if (_pin_mode == OSL20541_TYPE_CATHODE_COMMON) {
-        digitalWrite(_char_pin[i],HIGH);
+  if (pinState == _OSL20541_FUNCTION_FAIL) return _OSL20541_FUNCTION_FAIL;
+  if (pinState!=0) {
+    for (int i= _OSL20541_CHAR_PINS -1; i>=0; i--) {
+      if ((0b1 & pinState) > 0) {
+        if (_pin_mode == OSL20541_TYPE_CATHODE_COMMON) {
+          digitalWrite(_char_pin[i],HIGH);
+        } else {
+          digitalWrite(_char_pin[i],LOW);
+        }
       } else {
-        digitalWrite(_char_pin[i],LOW);
+        if (_pin_mode == OSL20541_TYPE_CATHODE_COMMON) {
+          digitalWrite(_char_pin[i],LOW);
+        } else {
+          digitalWrite(_char_pin[i],HIGH);
+        }
       }
-    } else {
-      if (_pin_mode == OSL20541_TYPE_CATHODE_COMMON) {
-        digitalWrite(_char_pin[i],LOW);
-      } else {
-        digitalWrite(_char_pin[i],HIGH);
-      }
+      pinState = pinState >> 1;
     }
-    pinState = pinState >> 1;
   }
   if (point) {
     pointOn();
@@ -167,6 +170,7 @@ uint16_t OSL20541::encode(char charactor){
     0x3F04, 0x33C4, 0x2DC0, 0x2012, 0x1F00, 0x0309, 0x1F02, 0x002D, 0x002A, 
     0x2409
   };
+  if (charactor == 0) return 0;
   switch(charactor) {
     case '-' : return charMap[0];
     case '0' : return charMap[1];
