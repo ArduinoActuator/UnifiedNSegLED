@@ -22,6 +22,7 @@ void OSL12306_16::begin(void) {
 }
 
 uint8_t OSL12306_16::displayOne(uint8_t n, bool dp, char dispChar) {
+  if (n>_num_digits-1) return _OSL12306_16_FUNCTION_FAIL;
   uint16_t pinState = encode(dispChar);
   if (pinState == _OSL12306_16_FUNCTION_FAIL) return _OSL12306_16_FUNCTION_FAIL;
   if (pinState != 0 ) {
@@ -80,14 +81,14 @@ uint8_t OSL12306_16::digitOff(uint8_t n) {
   return _OSL12306_16_FUNCTION_SUCCESS;
 }
 
-uint8_t OSL12306_16::display(uint64_t points, char dispData[]) {
+uint8_t OSL12306_16::display(uint64_t points, const char dispData[]) {
   for (int i=0; i<_num_digits; i++ ) {
     if ((0b1 & points) > 0) {
       if (_OSL12306_16_FUNCTION_FAIL == displayOne(i,true,dispData[i])) return _OSL12306_16_FUNCTION_FAIL;
-      delayMicroseconds(_OSL12306_16_BIT_DELAY);
-      if (_OSL12306_16_FUNCTION_FAIL == digitOff(i)) return _OSL12306_16_FUNCTION_FAIL;
     } else {
       if (_OSL12306_16_FUNCTION_FAIL == displayOne(i,false,dispData[i])) return _OSL12306_16_FUNCTION_FAIL;
+    }
+    if (_num_digits>1) {
       delayMicroseconds(_OSL12306_16_BIT_DELAY);
       if (_OSL12306_16_FUNCTION_FAIL == digitOff(i)) return _OSL12306_16_FUNCTION_FAIL;
     }

@@ -67,16 +67,16 @@
 ### [Grove - 4-Digit Display][Grove4DigitLED]以外のLEDで2桁以上のもの
 
 
-|機種名|[OSL20541-IR(秋月電子)][OSL20541IR]|[OSL30561-IRA(秋月電子)][OSL30561IRA]|
-|---|---|---|
-|[Arduino Nano ESP32][NanoESP32]|未1|未1|
-|[Arduino Mega 2560][Mega2560]|◯|◯|
-|[Arduino M0 pro][M0Pro]|未1|未1|
-|[Arduino UNO R4 Minima][UnoR4Minima]|未1|未1|
-|[Arduino Nano 33 IoT][Nano33IoT]|未1|未1|
-|[Arduino Giga R1 Wifi][GigaR1WiFi]|◯|◯|
-|[Ardino MKR Zero][MKRZero]|未1|未1|
-|[Arduino Nano RP2040 Connect][NanoRP2040Connect]|||
+|機種名|[OSL20541-IR(秋月電子)][OSL20541IR]|[OSL30561-IRA(秋月電子)][OSL30561IRA]|[OSL12306-16-IRA(秋月電子)][OSL12306-16-IRA]|[3-Wire LED Module DFR0090][DFR0090]|
+|---|---|---|---|---|
+|[Arduino Nano ESP32][NanoESP32]|未1|未1|||
+|[Arduino Mega 2560][Mega2560]|◯|◯|||
+|[Arduino M0 pro][M0Pro]|未1|未1|||
+|[Arduino UNO R4 Minima][UnoR4Minima]|未1|未1|||
+|[Arduino Nano 33 IoT][Nano33IoT]|未1|未1|||
+|[Arduino Giga R1 Wifi][GigaR1WiFi]|◯|◯|||
+|[Ardino MKR Zero][MKRZero]|未1|未1|||
+|[Arduino Nano RP2040 Connect][NanoRP2040Connect]|||||
 
 - 1 : ピン数が不足するため，動作確認していない
 
@@ -104,8 +104,8 @@ nSegLedFunctionReturnValue setColomn(bool flag);
 
 nSegLedFunctionReturnValue begin(void);
 nSegLedFunctionReturnValue clear(void);
-nSegLedFunctionReturnValue display(uint64_t points, char dispData[]);
-nSegLedFunctionReturnValue display(char dispData[]);
+nSegLedFunctionReturnValue display(uint64_t points, const char dispData[]);
+nSegLedFunctionReturnValue display(const char dispData[]);
 ```
 
 ```
@@ -167,7 +167,7 @@ nSegLedFunctionReturnValue setColomn(bool flag);
 ###  テストシナリオ2 : 数字の表示
 #### テスト対象API
 ```
-nSegLedFunctionReturnValue display(char dispData[]);
+nSegLedFunctionReturnValue display(const char dispData[]);
 ```
 
 #### 動作
@@ -253,13 +253,13 @@ nSegLedFunctionReturnValue set(uint8_t = BRIGHT_TYPICAL,uint8_t = 0x40,uint8_t =
 
 #### テスト対象API
 ```
-nSegLedFunctionReturnValue display(uint64_t points, char dispData[]);
+nSegLedFunctionReturnValue display(uint64_t points, const char dispData[]);
 ```
 
 #### 動作
 - LEDを消す
 - スタート合図を待つ
-- 1秒間隔でピリオドだけをON/OFFする ``display(uint64_t 1, char dispData[]= [0])`` (5回程度)
+- 1秒間隔でピリオドだけをON/OFFする ``display(uint64_t 1, const char dispData[]= [0])`` (5回程度)
 - LEDを消す
 - 人に確認してもらい，応答を待つ
 
@@ -297,13 +297,13 @@ nSegLedFunctionReturnValue display(uint64_t points, char dispData[]);
 
 #### テスト対象API
 ```
-nSegLedFunctionReturnValue display(uint64_t points, char dispData[]);
+nSegLedFunctionReturnValue display(uint64_t points, const char dispData[]);
 ```
 
 #### 動作
 - LEDを消す
 - スタート合図を待つ
-- 1秒間隔で表示する文字を変化させていく ``nSegLedFunctionReturnValue display(uint64_t 0, char dispData[] = [x]);``ここで``x``はWSP(0),-,0,1,2,3,4,5,6,7,8,9,a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,zと切り替える．
+- 1秒間隔で表示する文字を変化させていく ``nSegLedFunctionReturnValue display(uint64_t 0, const char dispData[] = [x]);``ここで``x``はWSP(0),-,0,1,2,3,4,5,6,7,8,9,a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,zと切り替える．
 - LEDを消す
 - 人に確認してもらい，応答を待つ
 
@@ -340,14 +340,14 @@ nSegLedFunctionReturnValue display(uint64_t points, char dispData[]);
 
 #### テスト対象API
 ```
-nSegLedFunctionReturnValue display(uint64_t points, char dispData[]);
+nSegLedFunctionReturnValue display(uint64_t points, const char dispData[]);
 ```
 
 #### 動作
 
 - LEDを消す
 - スタート合図を待つ
-- 1秒間隔で表示する文字を変化させていく ``nSegLedFunctionReturnValue display(uint64_t flag, char dispData[] = [x]);``ここで``x``はWSP(0),-,0,1,2,3,4,5,6,7,8,9,a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,zと切り替える．flagは0と1を切り替える．
+- 1秒間隔で表示する文字を変化させていく ``nSegLedFunctionReturnValue display(uint64_t flag, const char dispData[] = [x]);``ここで``x``はWSP(0),-,0,1,2,3,4,5,6,7,8,9,a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,zと切り替える．flagは0と1を切り替える．
 - LEDを消す
 - 人に確認してもらい，応答を待つ
 
@@ -384,7 +384,7 @@ nSegLedFunctionReturnValue display(uint64_t points, char dispData[]);
 
 #### テスト対象API
 ```
-nSegLedFunctionReturnValue display(uint64_t points, char dispData[]);
+nSegLedFunctionReturnValue display(uint64_t points, const char dispData[]);
 ```
 
 #### 動作
@@ -399,16 +399,16 @@ nSegLedFunctionReturnValue display(uint64_t points, char dispData[]);
 #### テスト結果
 
 
-|機種名|[OSL20541-IR(秋月電子)][OSL20541IR]|[OSL30561-IRA(秋月電子)][OSL30561IRA]|
-|---|---|---|
-|[Arduino Nano ESP32][NanoESP32]|未1|未1|
-|[Arduino Mega 2560][Mega2560]|◯|◯|
-|[Arduino M0 pro][M0Pro]|未1|未1|
-|[Arduino UNO R4 Minima][UnoR4Minima]|未1|未1|
-|[Arduino Nano 33 IoT][Nano33IoT]|未1|未1|
-|[Arduino Giga R1 Wifi][GigaR1WiFi]|◯|◯|
-|[Ardino MKR Zero][MKRZero]|未1|未1|
-|[Arduino Nano RP2040 Connect][NanoRP2040Connect]|||
+|機種名|[OSL20541-IR(秋月電子)][OSL20541IR]|[OSL30561-IRA(秋月電子)][OSL30561IRA]|[OSL12306-16-IRA(秋月電子)][OSL12306-16-IRA]|[3-Wire LED Module DFR0090][DFR0090]|
+|---|---|---|---|---|
+|[Arduino Nano ESP32][NanoESP32]|未1|未1|||
+|[Arduino Mega 2560][Mega2560]|◯|◯|||
+|[Arduino M0 pro][M0Pro]|未1|未1|||
+|[Arduino UNO R4 Minima][UnoR4Minima]|未1|未1|||
+|[Arduino Nano 33 IoT][Nano33IoT]|未1|未1|||
+|[Arduino Giga R1 Wifi][GigaR1WiFi]|◯|◯|||
+|[Ardino MKR Zero][MKRZero]|未1|未1|||
+|[Arduino Nano RP2040 Connect][NanoRP2040Connect]|||||
 
 - 1 : ピン数が不足するため，動作確認していない
 
@@ -425,29 +425,29 @@ nSegLedFunctionReturnValue display(uint64_t points, char dispData[]);
 
 #### テスト対象API
 ```
-nSegLedFunctionReturnValue display(uint64_t points, char dispData[]);
+nSegLedFunctionReturnValue display(uint64_t points, const char dispData[]);
 ```
 
 #### 動作
 - LEDを消す
 - スタート合図を待つ
-- 1秒間隔で表示する文字を変化させていく ``nSegLedFunctionReturnValue display(uint64_t 0, char dispData[] = [x]);``ここで``x``はWSP(0),-,0,1,2,3,4,5,6,7,8,9,a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,zと切り替える．(全ての桁が同じ表示で良い)
+- 1秒間隔で表示する文字を変化させていく ``nSegLedFunctionReturnValue display(uint64_t 0, const char dispData[] = [x]);``ここで``x``はWSP(0),-,0,1,2,3,4,5,6,7,8,9,a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,zと切り替える．(全ての桁が同じ表示で良い)
 - LEDを消す
 - 人に確認してもらい，応答を待つ
 
 
 #### テスト結果
 
-|機種名|[OSL20541-IR(秋月電子)][OSL20541IR]|[OSL30561-IRA(秋月電子)][OSL30561IRA]|
-|---|---|---|
-|[Arduino Nano ESP32][NanoESP32]|未1|未1|
-|[Arduino Mega 2560][Mega2560]|◯|◯|
-|[Arduino M0 pro][M0Pro]|未1|未1|
-|[Arduino UNO R4 Minima][UnoR4Minima]|未1|未1|
-|[Arduino Nano 33 IoT][Nano33IoT]|未1|未1|
-|[Arduino Giga R1 Wifi][GigaR1WiFi]|◯|◯|
-|[Ardino MKR Zero][MKRZero]|未1|未1|
-|[Arduino Nano RP2040 Connect][NanoRP2040Connect]|||
+|機種名|[OSL20541-IR(秋月電子)][OSL20541IR]|[OSL30561-IRA(秋月電子)][OSL30561IRA]|[OSL12306-16-IRA(秋月電子)][OSL12306-16-IRA]|[3-Wire LED Module DFR0090][DFR0090]|
+|---|---|---|---|---|
+|[Arduino Nano ESP32][NanoESP32]|未1|未1|||
+|[Arduino Mega 2560][Mega2560]|◯|◯|||
+|[Arduino M0 pro][M0Pro]|未1|未1|||
+|[Arduino UNO R4 Minima][UnoR4Minima]|未1|未1|||
+|[Arduino Nano 33 IoT][Nano33IoT]|未1|未1|||
+|[Arduino Giga R1 Wifi][GigaR1WiFi]|◯|◯|||
+|[Ardino MKR Zero][MKRZero]|未1|未1|||
+|[Arduino Nano RP2040 Connect][NanoRP2040Connect]|||||
 
 - 1 : ピン数が不足するため，動作確認していない
 
@@ -465,14 +465,14 @@ nSegLedFunctionReturnValue display(uint64_t points, char dispData[]);
 
 #### テスト対象API
 ```
-nSegLedFunctionReturnValue display(uint64_t points, char dispData[]);
+nSegLedFunctionReturnValue display(uint64_t points, const char dispData[]);
 ```
 
 #### 動作
 
 - LEDを消す
 - スタート合図を待つ
-- 1秒間隔で表示する文字を変化させていく ``nSegLedFunctionReturnValue display(uint64_t flag, char dispData[] = [x]);``ここで``x``はWSP(0),-,0,1,2,3,4,5,6,7,8,9,a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,zと切り替える．flagは0と2進数全桁1を切り替える．(全ての桁が同じ表示で良い)
+- 1秒間隔で表示する文字を変化させていく ``nSegLedFunctionReturnValue display(uint64_t flag, const char dispData[] = [x]);``ここで``x``はWSP(0),-,0,1,2,3,4,5,6,7,8,9,a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,zと切り替える．flagは0と2進数全桁1を切り替える．(全ての桁が同じ表示で良い)
 - LEDを消す
 - 人に確認してもらい，応答を待つ
 
@@ -480,16 +480,16 @@ nSegLedFunctionReturnValue display(uint64_t points, char dispData[]);
 #### テスト結果
 
 
-|機種名|[OSL20541-IR(秋月電子)][OSL20541IR]|[OSL30561-IRA(秋月電子)][OSL30561IRA]|
-|---|---|---|
-|[Arduino Nano ESP32][NanoESP32]|未1|未1|
-|[Arduino Mega 2560][Mega2560]|◯|◯|
-|[Arduino M0 pro][M0Pro]|未1|未1|
-|[Arduino UNO R4 Minima][UnoR4Minima]|未1|未1|
-|[Arduino Nano 33 IoT][Nano33IoT]|未1|未1|
-|[Arduino Giga R1 Wifi][GigaR1WiFi]|◯|◯|
-|[Ardino MKR Zero][MKRZero]|未1|未1|
-|[Arduino Nano RP2040 Connect][NanoRP2040Connect]|||
+|機種名|[OSL20541-IR(秋月電子)][OSL20541IR]|[OSL30561-IRA(秋月電子)][OSL30561IRA]|[OSL12306-16-IRA(秋月電子)][OSL12306-16-IRA]|[3-Wire LED Module DFR0090][DFR0090]|
+|---|---|---|---|---|
+|[Arduino Nano ESP32][NanoESP32]|未1|未1|||
+|[Arduino Mega 2560][Mega2560]|◯|◯|||
+|[Arduino M0 pro][M0Pro]|未1|未1|||
+|[Arduino UNO R4 Minima][UnoR4Minima]|未1|未1|||
+|[Arduino Nano 33 IoT][Nano33IoT]|未1|未1|||
+|[Arduino Giga R1 Wifi][GigaR1WiFi]|◯|◯|||
+|[Ardino MKR Zero][MKRZero]|未1|未1|||
+|[Arduino Nano RP2040 Connect][NanoRP2040Connect]|||||
 
 - 1 : ピン数が不足するため，動作確認していない
 
@@ -604,6 +604,7 @@ nSegLedFunctionReturnValue display(uint64_t points, char dispData[]);
 |14|2|2|[OSL20541-IR(秋月電子)][OSL20541IR]|なし|2.1(逆電圧:5)|
 |7|3|2|[OSL30561-IRA(秋月電子)][OSL30561IRA]|なし|2.1(逆電圧:5)|
 |7|4|1|[Grove - 4-Digit Display][Grove4DigitLED]|TM1637|3.3～5.5|
+|7|8|2|[3-Wire LED Module DFR0090][DFR0090]|74HC595||
 
 |種別番号|コンマ/コロン/ピリオド等|
 |---|---|
@@ -618,9 +619,8 @@ nSegLedFunctionReturnValue display(uint64_t points, char dispData[]);
 [OSL30561IRA]:https://akizukidenshi.com/catalog/g/g117364/
 <!-- 4桁 7セグLED + 1*コロン -->
 [Grove4DigitLED]:https://wiki.seeedstudio.com/Grove-4-Digit_Display/
-
-
-
+<!-- S3-Wire LED Module DFR0090 : SPI(3線式) LED Module 8 Digital (8桁赤色7セグLEDモジュール) -->
+[DFR0090]:https://akizukidenshi.com/catalog/g/g106681/
 
 <!-- Arduino 本体 -->
 

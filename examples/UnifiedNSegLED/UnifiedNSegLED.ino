@@ -2,9 +2,9 @@
 
 
 #define USE_OSL12306_16
-#define USE_OSL20541
-#define USE_OSL30561
-#define USE_GROVE_TM1637
+//#define USE_OSL20541
+//#define USE_OSL30561
+//#define USE_GROVE_TM1637
 
 #ifdef USE_OSL12306_16
 #define OSL12306_16_PIN_2 22

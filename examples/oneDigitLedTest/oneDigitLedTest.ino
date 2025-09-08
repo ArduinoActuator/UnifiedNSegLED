@@ -8,6 +8,7 @@
  * 接続するピンの定義
  */
 #ifdef USE_OSL12306_16
+/*
 #define OSL12306_16_PIN_2 22
 #define OSL12306_16_PIN_3 23
 #define OSL12306_16_PIN_4 24
@@ -26,6 +27,28 @@
 #define OSL12306_16_PIN_17 37
 #define OSL12306_16_PIN_18 38
 #define OSL12306_16_PIN_19 39
+*/
+//#define OSL12306_16_PIN_1 41
+#define OSL12306_16_PIN_1 38
+#define OSL12306_16_PIN_2 39
+#define OSL12306_16_PIN_3 37
+#define OSL12306_16_PIN_4 35
+#define OSL12306_16_PIN_5 33
+#define OSL12306_16_PIN_6 31
+#define OSL12306_16_PIN_7 29
+#define OSL12306_16_PIN_8 27
+#define OSL12306_16_PIN_9 25
+#define OSL12306_16_PIN_10 23
+
+#define OSL12306_16_PIN_12 22
+#define OSL12306_16_PIN_13 24
+#define OSL12306_16_PIN_14 26
+#define OSL12306_16_PIN_15 28
+#define OSL12306_16_PIN_16 30
+#define OSL12306_16_PIN_17 32
+#define OSL12306_16_PIN_18 34
+#define OSL12306_16_PIN_19 36
+
 #endif /* USE_OSL12306_16 */
 
 #include "UnifiedNSegLED.h"
@@ -49,7 +72,7 @@
 #define OSL12306_16_PIN_N OSL12306_16_PIN_6
 #define OSL12306_16_PIN_P OSL12306_16_PIN_5
 #define OSL12306_16_PIN_DP OSL12306_16_PIN_10
-#define OSL12306_16_PIN_DIGIT OSL12306_16_PIN_11
+#define OSL12306_16_PIN_DIGIT OSL12306_16_PIN_1
 
 
 #define OSL12306_16_NUM_OF_PINS _OSL12306_16_CHAR_PINS
@@ -73,8 +96,8 @@ OSL12306_16 __osl12306_16(
 UnifiedNSegLED osl12306_16(&__osl12306_16, OSL12306_16_TYPE);
 #endif /* USE_OSL12306_16 */
 
-unsigned int stage=0;
-unsigned int test=1;
+
+//unsigned int test=1;
 
 #define DIGITS OSL12306_16_NUM_OF_DIGITS
 #define MAX_BUFF_SIZE 256
@@ -163,7 +186,6 @@ void sumTestResult(void){
   sprintf(finalMessage, "Test result : all(%d) , success(%d) , fail(%d)", MAX_TEST, MAX_TEST-count, count);
   Serial.println(finalMessage);
   Serial.println("");
-  test++;
 }
 
 
@@ -210,60 +232,51 @@ void clearDispData() {
   }
 }
 
-unsigned long lastTime=0;
-uint64_t flag =1;
 
-void test1_stage0() {
-  // テスト内容の説明
+
+//  テストシナリオ1 : ピリオドの点灯/消灯
+void test1() {
+  String about = "test1";
+  printStartMessage(about, 0);
+  clearDispData();
   Serial.println("=== action ===");
   Serial.println("ON/OFF period 10 times");
   Serial.println("");
   waitForStart();
 
   Serial.println("test1 start.");
-  stage++;
-}
 
-//  テストシナリオ1 : ピリオドの点灯/消灯
-void test1() {
   nSegLedFunctionReturnValue value;
-  String about = "test1";
 
-  if (stage==0) {
-    printStartMessage(about, 0);
-    clearDispData();
-    test1_stage0();
-    lastTime=millis();
-  } else if (( stage > 0 ) &&( stage < 10 )) {
+  uint64_t flag=1;
+  for (int i=0; i<10; i++) {
     if (flag==1) {
       flag = 0;
     } else {
       flag = 1;
     }
 #ifdef USE_OSL12306_16
-    //char dispData[1] = {0};
     value = osl12306_16.display(flag, dispData);
     checkReturnValue(value, FUNCTION_DISPLAY);
 #endif /* USE_OSL12306_16 */
-    unsigned long currentTime=millis();
-    if (1500 < (currentTime - lastTime)) {
-      lastTime = currentTime;
-      stage++;
-    };
-  } else {
-    checkTestResult(about, 0);
-    Serial.println("");
-    Serial.println("");
-#ifdef USE_OSL12306_16
-    value = osl12306_16.clear();
-    checkReturnValue(value, FUNCTION_CLEAR);
-#endif /* USE_OSL12306_16 */
-    test++;
-    stage=0;
+    delay(1000);
   }
+
+  checkTestResult(about, 0);
+  Serial.println("");
+  Serial.println("");
+#ifdef USE_OSL12306_16
+  value = osl12306_16.clear();
+  checkReturnValue(value, FUNCTION_CLEAR);
+#endif /* USE_OSL12306_16 */
+
 }
 
-void test2_stage0() {
+
+void test2() {
+  String about = "test2";
+  printStartMessage(about, 1);
+  clearDispData();
   // テスト内容の説明
   Serial.println("=== action ===");
   Serial.println("x (x:-,0,1...,a,b,c...z)");
@@ -271,20 +284,12 @@ void test2_stage0() {
   waitForStart();
 
   Serial.println("test2 start.");
-  stage =1;
-}
 
-void test2() {
+
   nSegLedFunctionReturnValue value;
-  String about = "test2";
 
-  if (stage==0) {
-    printStartMessage(about, 1);
-    clearDispData();
-    test2_stage0();
-    lastTime=millis();
-  } else if ((stage>0) &&(stage < 39 )) {
-    switch(stage) {
+  for (int i=0; i< 39 ;i++) {
+    switch(i) {
       case 1: {dispData[0]=0;break;}
       case 2: {dispData[0]='-';break;}
       case 3: {dispData[0]='0';break;}
@@ -328,26 +333,32 @@ void test2() {
     value = osl12306_16.display(0, dispData);
     checkReturnValue(value, FUNCTION_DISPLAY);
 #endif /* USE_OSL12306_16 */
-    unsigned long currentTime=millis();
-    if (1500 < (currentTime - lastTime)) {
-      lastTime = currentTime;
-      stage++;
-    };
-  } else {
-    checkTestResult(about, 1);
-    Serial.println("");
-    Serial.println("");
-
+    delay(1000);
+    clearDispData();
 #ifdef USE_OSL12306_16
     value = osl12306_16.clear();
     checkReturnValue(value, FUNCTION_CLEAR);
 #endif /* USE_OSL12306_16 */
-    test++;
-    stage=0;
   }
+
+  checkTestResult(about, 1);
+  Serial.println("");
+  Serial.println("");
+
+#ifdef USE_OSL12306_16
+  value = osl12306_16.clear();
+  checkReturnValue(value, FUNCTION_CLEAR);
+#endif /* USE_OSL12306_16 */
+
 }
 
-void test3_stage0() {
+
+void test3() {
+  String about = "test3";
+
+  printStartMessage(about, 2);
+  clearDispData();
+
   // テスト内容の説明
   Serial.println("=== action ===");
   Serial.println("x (x:-,0,1...,a,b,c...z)");
@@ -355,21 +366,18 @@ void test3_stage0() {
   waitForStart();
 
   Serial.println("test3 start.");
-  stage =1;
-}
 
-
-void test3() {
   nSegLedFunctionReturnValue value;
-  String about = "test3";
+  uint64_t flag=1;
 
-  if (stage==0) {
-    printStartMessage(about, 2);
-    clearDispData();
-    test3_stage0();
-    lastTime=millis();
-  } else if ((stage>0) &&(stage < 39 )) {
-    switch(stage) {
+
+  for (int i=0; i< 39 ;i++) {
+    if (flag==1) {
+      flag = 0;
+    } else {
+      flag = 1;
+    }
+    switch(i) {
       case 1: {dispData[0]=0;break;}
       case 2: {dispData[0]='-';break;}
       case 3: {dispData[0]='0';break;}
@@ -409,33 +417,27 @@ void test3() {
       case 37: {dispData[0]='y';break;}
       case 38: {dispData[0]='z';break;}
     }
-    if (flag==1) {
-      flag = 0;
-    } else {
-      flag = 1;
-    }
 #ifdef USE_OSL12306_16
     value = osl12306_16.display(flag, dispData);
     checkReturnValue(value, FUNCTION_DISPLAY);
 #endif /* USE_OSL12306_16 */
-    unsigned long currentTime=millis();
-    if (1500 < (currentTime - lastTime)) {
-      lastTime = currentTime;
-      stage++;
-    };
-  } else {
-    checkTestResult(about, 2);
-    Serial.println("");
-    Serial.println("");
-
+    delay(1000);
+    clearDispData();
 #ifdef USE_OSL12306_16
     value = osl12306_16.clear();
     checkReturnValue(value, FUNCTION_CLEAR);
 #endif /* USE_OSL12306_16 */
-    test++;
-    stage=0;
-    clearDispData();
   }
+
+  checkTestResult(about, 2);
+  Serial.println("");
+  Serial.println("");
+
+#ifdef USE_OSL12306_16
+  value = osl12306_16.clear();
+  checkReturnValue(value, FUNCTION_CLEAR);
+#endif /* USE_OSL12306_16 */
+
 }
 
 void setup() {
@@ -462,25 +464,16 @@ void setup() {
   value = osl12306_16.clear();
   checkReturnValue(value, FUNCTION_CLEAR);
 #endif /* USE_OSL12306_16 */
-  stage=0;
-  test=1;
+
+  test1();
+  test2();
+  test3();
+  sumTestResult();
+
 }
 
 void loop() {
-  switch(test){
-    case 1: {
-      test1();break;
-    }
-    case 2: {
-      test2();break;
-    }
-    case 3: {
-      test3();break;
-    }
-    case 4: {
-      sumTestResult();break;
-    }
-  }
+
 }
 
 

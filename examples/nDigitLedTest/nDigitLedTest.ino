@@ -1,8 +1,10 @@
 /*
- * LCDの選択
+ * LEDの選択
  */
-#define USE_OSL20541
+//#define USE_OSL20541
 //#define USE_OSL30561
+//#define USE_OSL12306_16
+#define USE_DFR0090
 
 /*
  * ピン番号の定義
@@ -99,7 +101,7 @@ OSL20541 __osl20541(
   osl20541_digitPins
 );
 
-UnifiedNSegLED osl20541(&__osl20541, OSL20541_TYPE);
+UnifiedNSegLED nSegLed(&__osl20541, OSL20541_TYPE);
 #endif /* USE_OSL20541 */
 
 #ifdef USE_OSL30561
@@ -136,8 +138,30 @@ OSL30561 __osl30561(
   osl30561_digitPins
 );
 
-UnifiedNSegLED osl30561(&__osl30561, OSL30561_TYPE);
+UnifiedNSegLED nSegLed(&__osl30561, OSL30561_TYPE);
 #endif /* USE_OSL30561 */
+
+#ifdef USE_OSL12306_16
+#endif /* USE_OSL12306_16 */
+
+
+#ifdef USE_DFR0090
+//Pin connected to clock pin (SH_CP) of 74HC595
+#define DFR0090_CLOCK_PIN 3
+//Pin connected to latch pin (ST_CP) of 74HC595
+#define DFR0090_LATCH_PIN 8
+//Pin connected to Data in (DS) of 74HC595
+#define DFR0090_DATA_PIN  9
+//7SegLEDの数
+#define DFR0090_DIGITS    8
+
+#define DIGITS DFR0090_DIGITS
+#define PRINTABLE_CHAR_NUM 18
+
+DFR0090 _dfr(DFR0090_CLOCK_PIN, DFR0090_LATCH_PIN, DFR0090_DATA_PIN, DFR0090_DIGITS);
+
+UnifiedNSegLED nSegLed(&_dfr, DFR0090_TYPE);
+#endif /* USE_DFR0090 */
 
 unsigned int stage=0;
 unsigned int test=1;
@@ -299,14 +323,9 @@ unsigned long test1_stage0() {
 
 void test1_stageX() {
   nSegLedFunctionReturnValue value;
-#ifdef USE_OSL20541
-  value = osl20541.display(stage, dispData);
+
+  value = nSegLed.display(stage, dispData);
   checkReturnValue(value, FUNCTION_DISPLAY);
-#endif /* USE_OSL20541 */
-#ifdef USE_OSL30561
-  value = osl30561.display(stage, dispData);
-  checkReturnValue(value, FUNCTION_DISPLAY);
-#endif /* USE_OSL30561 */
 }
 
 unsigned long max_loop;
@@ -326,7 +345,7 @@ void test1() {
   } else if ((stage >0) && (stage < max_loop)) {
     test1_stageX();
     unsigned long currentTime=millis();
-    if (1500 < (currentTime - lastTime)) {
+    if (500 < (currentTime - lastTime)) {
       lastTime = currentTime;
       stage++;
     };
@@ -334,14 +353,10 @@ void test1() {
     checkTestResult(about, 0);
     Serial.println("");
     Serial.println("");
-#ifdef USE_OSL12306_16
-    value = osl20541.clear();
+
+    value = nSegLed.clear();
     checkReturnValue(value, FUNCTION_CLEAR);
-#endif /* USE_OSL12306_16 */
-#ifdef USE_OSL30561
-    value = osl30561.clear();
-    checkReturnValue(value, FUNCTION_CLEAR);
-#endif /* USE_OSL30561 */
+
     test++;
     stage=0;
   }
@@ -350,12 +365,13 @@ void test1() {
 void test2_stage0() {
   // テスト内容の説明
   Serial.println("=== action ===");
-#ifdef USE_OSL20541
+
+#if PRINTABLE_CHAR_NUM==38
   Serial.println("x (x:-,0,1...,a,b,c...z)");
-#endif /* USE_OSL20541 */
-#ifdef USE_OSL30561
+#else
   Serial.println("x (x:-,0,1...,a,b,c,d,e,f)");
-#endif /* USE_OSL30561 */
+#endif
+
   Serial.println("");
   waitForStart();
 
@@ -393,7 +409,7 @@ void test2() {
         case 16: {dispData[j]='d';break;}
         case 17: {dispData[j]='e';break;}
         case 18: {dispData[j]='f';break;}
-#ifdef USE_OSL20541
+#if PRINTABLE_CHAR_NUM==38
         case 19: {dispData[j]='g';break;}
         case 20: {dispData[j]='h';break;}
         case 21: {dispData[j]='i';break;}
@@ -414,19 +430,15 @@ void test2() {
         case 36: {dispData[j]='x';break;}
         case 37: {dispData[j]='y';break;}
         case 38: {dispData[j]='z';break;}
-#endif /* USE_OSL20541 */
+#endif
       }
     }
-#ifdef USE_OSL20541
-    value = osl20541.display(0, dispData);
+
+    value = nSegLed.display(0, dispData);
     checkReturnValue(value, FUNCTION_DISPLAY);
-#endif /* USE_OSL20541 */
-#ifdef USE_OSL30561
-    value = osl30561.display(0, dispData);
-    checkReturnValue(value, FUNCTION_DISPLAY);
-#endif /* USE_OSL30561 */
+
     unsigned long currentTime=millis();
-    if (1500 < (currentTime - lastTime)) {
+    if (500 < (currentTime - lastTime)) {
       lastTime = currentTime;
       stage++;
     };
@@ -435,14 +447,10 @@ void test2() {
     Serial.println("");
     Serial.println("");
 
-#ifdef USE_OSL20541
-    value = osl20541.clear();
+    value = nSegLed.clear();
     checkReturnValue(value, FUNCTION_CLEAR);
-#endif /* USE_OSL20541 */
-#ifdef USE_OSL30561
-    value = osl30561.clear();
-    checkReturnValue(value, FUNCTION_CLEAR);
-#endif /* USE_OSL30561 */
+
+
     test++;
     stage=0;
     clearDispData();
@@ -452,12 +460,11 @@ void test2() {
 void test3_stage0() {
   // テスト内容の説明
   Serial.println("=== action ===");
-#ifdef USE_OSL20541
+#if PRINTABLE_CHAR_NUM==38
   Serial.println("x. (x:-,0,1...,a,b,c...z)");
-#endif /* USE_OSL20541 */
-#ifdef USE_OSL30561
+#else
   Serial.println("x. (x:-,0,1...,a,b,c,d,e,f)");
-#endif /* USE_OSL30561 */
+#endif
   Serial.println("");
   waitForStart();
 
@@ -495,7 +502,7 @@ void test3() {
         case 16: {dispData[j]='d';break;}
         case 17: {dispData[j]='e';break;}
         case 18: {dispData[j]='f';break;}
-#ifdef USE_OSL20541
+#if PRINTABLE_CHAR_NUM==38
         case 19: {dispData[j]='g';break;}
         case 20: {dispData[j]='h';break;}
         case 21: {dispData[j]='i';break;}
@@ -516,18 +523,14 @@ void test3() {
         case 36: {dispData[j]='x';break;}
         case 37: {dispData[j]='y';break;}
         case 38: {dispData[j]='z';break;}
-#endif /* USE_OSL20541 */
+#endif
       }
     }
     uint64_t flag = (stage-1) % max_loop ;
-#ifdef USE_OSL20541
-    value = osl20541.display(flag, dispData);
+
+    value = nSegLed.display(flag, dispData);
     checkReturnValue(value, FUNCTION_DISPLAY);
-#endif /* USE_OSL20541 */
-#ifdef USE_OSL30561
-    value = osl30561.display(flag, dispData);
-    checkReturnValue(value, FUNCTION_DISPLAY);
-#endif /* USE_OSL30561 */
+
     unsigned long currentTime=millis();
     if (1500 < (currentTime - lastTime)) {
       lastTime = currentTime;
@@ -538,14 +541,9 @@ void test3() {
     Serial.println("");
     Serial.println("");
 
-#ifdef USE_OSL20541
-    value = osl20541.clear();
+    value = nSegLed.clear();
     checkReturnValue(value, FUNCTION_CLEAR);
-#endif /* USE_OSL20541 */
-#ifdef USE_OSL30561
-    value = osl30561.clear();
-    checkReturnValue(value, FUNCTION_CLEAR);
-#endif /* USE_OSL30561 */
+
     test++;
     stage=0;
     clearDispData();
@@ -571,19 +569,10 @@ void setup() {
 
   nSegLedFunctionReturnValue value;
 
-#ifdef USE_OSL20541
-  value = osl20541.begin();
+  value = nSegLed.begin();
   checkReturnValue(value, FUNCTION_BEGIN);
-  value = osl20541.clear();
+  value = nSegLed.clear();
   checkReturnValue(value, FUNCTION_CLEAR);
-#endif /* USE_OSL20541 */
-
-#ifdef USE_OSL30561
-  value = osl30561.begin();
-  checkReturnValue(value, FUNCTION_BEGIN);
-  value = osl30561.clear();
-  checkReturnValue(value, FUNCTION_CLEAR);
-#endif /* USE_OSL30561 */
 
 }
 

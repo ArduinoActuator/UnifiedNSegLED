@@ -88,14 +88,14 @@ uint8_t OSL20541::digitOff(uint8_t n) {
   return _OSL20541_FUNCTION_SUCCESS;
 }
 
-uint8_t OSL20541::display(uint64_t points, char dispData[]) {
+uint8_t OSL20541::display(uint64_t points, const char dispData[]) {
   for (int i=0; i<_num_digits; i++ ) {
     if ((0b1 & points) > 0) {
       if (_OSL20541_FUNCTION_FAIL == displayOne(i,true,dispData[i])) return _OSL20541_FUNCTION_FAIL;
-      delayMicroseconds(_OSL20541_BIT_DELAY);
-      if (_OSL20541_FUNCTION_FAIL == digitOff(i)) return _OSL20541_FUNCTION_FAIL;
     } else {
       if (_OSL20541_FUNCTION_FAIL == displayOne(i,false,dispData[i])) return _OSL20541_FUNCTION_FAIL;
+    }
+    if (_num_digits>1) {
       delayMicroseconds(_OSL20541_BIT_DELAY);
       if (_OSL20541_FUNCTION_FAIL == digitOff(i)) return _OSL20541_FUNCTION_FAIL;
     }

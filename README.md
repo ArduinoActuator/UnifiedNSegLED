@@ -12,7 +12,7 @@ IoTの端末として用いることを前提にしているため，
 - [赤色2桁LED表示器 14セグメント+Dp OSL20541-IR][OSL20541IR]
 - [3桁7セグメントLED表示器 赤色 アノードコモン OSL30561-IRA][OSL30561IRA]
 - [Grove - 4-Digit Display][Grove4DigitLED]
-
+- [3-Wire LED Module DFR0090][DFR0090]
 
 
 <!-- 以下は，外部リンクの定義 
@@ -27,6 +27,8 @@ IoTの端末として用いることを前提にしているため，
 [OSL30561IRA]:https://akizukidenshi.com/catalog/g/g117364/
 <!-- 4桁 7セグLED + 1*コロン -->
 [Grove4DigitLED]:https://wiki.seeedstudio.com/Grove-4-Digit_Display/
+<!-- 3-Wire LED Module DFR0090 : SPI(3線式) LED Module 8 Digital (8桁赤色7セグLEDモジュール) -->
+[DFR0090]:https://akizukidenshi.com/catalog/g/g106681/
 
 <!-- 以下は，外部リンクの定義 -->
 [GroveBarometerSensorBMP180]:http://wiki.seeedstudio.com/Grove-Barometer_Sensor-BMP180/

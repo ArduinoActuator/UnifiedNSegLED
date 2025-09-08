@@ -5,7 +5,7 @@
 #define USE_CONVERTER
 
 /*
- * LCDの選択
+ * LEDの選択
  */
 #define USE_GROVE_TM1637
 

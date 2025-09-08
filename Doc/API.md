@@ -302,7 +302,7 @@ nSegLedFunctionReturnValue set(uint8_t = BRIGHT_TYPICAL,uint8_t brightness, uint
 ## 文字の表示
 各桁に文字を表示するためのAPI．
 ```
-nSegLedFunctionReturnValue display(char dispData[]);
+nSegLedFunctionReturnValue display(const char dispData[]);
 ```
 
 
@@ -311,7 +311,7 @@ nSegLedFunctionReturnValue display(char dispData[]);
 各桁のピリオドのON/OFFを2進数の各桁と対応付けて表し，それを第1引数とする．
 第2引数は表示する文字の配列．
 ```
-nSegLedFunctionReturnValue display(uint64_t points, char dispData[]);
+nSegLedFunctionReturnValue display(uint64_t points, const char dispData[]);
 ```
 
 ## 注意事項

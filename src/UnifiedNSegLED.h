@@ -5,12 +5,14 @@
 #include "OSL20541.h"
 #include "OSL30561.h"
 #include "TM1637.h"
+#include "DFR0090.h"
 
 typedef enum {
   OSL12306_16_TYPE =1,
   OSL20541_TYPE,
   OSL30561_TYPE,
-  GROVE_TM1637_TYPE
+  GROVE_TM1637_TYPE,
+  DFR0090_TYPE
 } UnifiedNSegLedType;
 
 typedef enum {
@@ -25,14 +27,15 @@ public:
   UnifiedNSegLED(OSL20541* osl20541, UnifiedNSegLedType type);
   UnifiedNSegLED(OSL12306_16* osl12306_16, UnifiedNSegLedType type);
   UnifiedNSegLED(TM1637* tm1637, UnifiedNSegLedType type);
+  UnifiedNSegLED(DFR0090* dfr0090, UnifiedNSegLedType type);
 
   nSegLedFunctionReturnValue set(uint8_t = BRIGHT_TYPICAL,uint8_t = 0x40,uint8_t = 0xc0);
   nSegLedFunctionReturnValue setColomn(bool flag);
 
   nSegLedFunctionReturnValue begin(void);
   nSegLedFunctionReturnValue clear(void);
-  nSegLedFunctionReturnValue display(uint64_t points, char dispData[]);
-  nSegLedFunctionReturnValue display(char dispData[]);
+  nSegLedFunctionReturnValue display(uint64_t points, const char dispData[]);
+  nSegLedFunctionReturnValue display(const char dispData[]);
 protected:
   nSegLedFunctionReturnValue analyzeRstValue(uint8_t val);
   int8_t convChar(char);
@@ -41,6 +44,7 @@ protected:
   OSL20541 * _osl20541;
   OSL12306_16 * _osl12306_16;
   TM1637 * _tm1637;
+  DFR0090* _dfr0090;
 };
 
 

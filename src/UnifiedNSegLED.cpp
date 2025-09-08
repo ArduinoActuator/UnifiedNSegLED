@@ -21,6 +21,11 @@ UnifiedNSegLED::UnifiedNSegLED(TM1637 * tm1637, UnifiedNSegLedType type):
   _type(type)
 {}
 
+UnifiedNSegLED::UnifiedNSegLED(DFR0090 * dfr0090, UnifiedNSegLedType type):
+  _dfr0090(dfr0090),
+  _type(type)
+{}
+
 nSegLedFunctionReturnValue UnifiedNSegLED::begin(void) {
   switch(_type) {
     case OSL12306_16_TYPE:
@@ -34,6 +39,9 @@ nSegLedFunctionReturnValue UnifiedNSegLED::begin(void) {
       return NSEGLED_FUNCTION_SUCCESS;
     case GROVE_TM1637_TYPE:
       _tm1637->init();
+      return NSEGLED_FUNCTION_SUCCESS;
+    case DFR0090_TYPE:
+      _dfr0090->begin();
       return NSEGLED_FUNCTION_SUCCESS;
   }
   return NSEGLED_FUNCTION_UNSUPPORTED;
@@ -68,11 +76,14 @@ nSegLedFunctionReturnValue UnifiedNSegLED::clear(void) {
     case GROVE_TM1637_TYPE:
       _tm1637->clearDisplay();
       return NSEGLED_FUNCTION_SUCCESS;
+    case DFR0090_TYPE:
+      rst = _dfr0090->clear();
+      return analyzeRstValue(rst);
   }
   return NSEGLED_FUNCTION_UNSUPPORTED;
 }
 
-nSegLedFunctionReturnValue UnifiedNSegLED::display(uint64_t points, char dispData[]) {
+nSegLedFunctionReturnValue UnifiedNSegLED::display(uint64_t points, const char dispData[]) {
   uint8_t rst;
   switch(_type) {
     case OSL12306_16_TYPE:
@@ -83,6 +94,9 @@ nSegLedFunctionReturnValue UnifiedNSegLED::display(uint64_t points, char dispDat
       return analyzeRstValue(rst);
     case OSL30561_TYPE:
       rst = _osl30561->display(points, dispData);
+      return analyzeRstValue(rst);
+    case DFR0090_TYPE:
+      rst = _dfr0090->display(points, dispData);
       return analyzeRstValue(rst);
   }
   return NSEGLED_FUNCTION_UNSUPPORTED;
@@ -116,7 +130,7 @@ int8_t UnifiedNSegLED::convChar(char data) {
   return (int8_t) -1;
 }
 
-nSegLedFunctionReturnValue UnifiedNSegLED::display(char dispData[]) {
+nSegLedFunctionReturnValue UnifiedNSegLED::display(const char dispData[]) {
   if (_type != GROVE_TM1637_TYPE) return NSEGLED_FUNCTION_UNSUPPORTED;
   for (int i=0; i< 4 ; i++) {
     int8_t data = convChar(dispData[i]);
