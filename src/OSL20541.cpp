@@ -236,5 +236,5 @@ uint16_t OSL20541::encode(char charactor){
     case 'z' : return charMap[36];
     case 'Z' : return charMap[36];
   }
-  return _OSL20541_FUNCTION_FAIL;
+  return 0;
 }

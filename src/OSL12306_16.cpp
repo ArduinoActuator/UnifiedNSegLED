@@ -233,5 +233,5 @@ uint16_t OSL12306_16::encode(char charactor){
     case 'z' : return charMap[36];
     case 'Z' : return charMap[36];
   }
-  return _OSL12306_16_FUNCTION_FAIL;
+  return 0;
 }
