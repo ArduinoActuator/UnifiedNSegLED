@@ -2,7 +2,9 @@
 /*
  * NanoやMKRをClassic (UNO)のシールドを使えるようにするための変換基板を使うか否かの選択
  */
-#define USE_CONVERTER
+//#define USE_CONVERTER
+
+#include "detectArduinoHardware.h"
 
 /*
  * LEDの選択
@@ -17,17 +19,22 @@
 #define CLK DIGITAL_2//pins definitions for TM1637 and can be changed to other ports
 #define DIO DIGITAL_3
 #else /* USE_CONVERTER */
-#define CLK 2//pins definitions for TM1637 and can be changed to other ports
-#define DIO 3
+// MKR
+//#define CLK D5//pins definitions for TM1637 and can be changed to other ports
+//#define DIO D6
+// other
+#define CLK D2//pins definitions for TM1637 and can be changed to other ports
+#define DIO D3
 #endif /* USE_CONVERTER */
+#endif /* USE_GROVE_TM1637 */
 
 #include "UnifiedNSegLED.h"
-#include "detectArduinoHardware.h"
 
 #ifdef USE_CONVERTER
 #include "ArduinoShieldConverter.h"
 #endif /* USE_CONVERTER */
 
+#ifdef USE_GROVE_TM1637
 TM1637 __tm1637(CLK,DIO);
 UnifiedNSegLED tm1637(&__tm1637, GROVE_TM1637_TYPE);
 #endif /* USE_GROVE_TM1637 */
