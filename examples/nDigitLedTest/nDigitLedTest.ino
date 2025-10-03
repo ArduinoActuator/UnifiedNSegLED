@@ -2,14 +2,33 @@
  * LEDの選択
  */
 //#define USE_OSL20541
-//#define USE_OSL30561
+#define USE_OSL30561
 //#define USE_OSL12306_16
-#define USE_DFR0090
+//#define USE_DFR0090
 
 /*
  * ピン番号の定義
  */
 #ifdef USE_OSL20541
+#define OSL20541_PIN_1 22
+#define OSL20541_PIN_2 24
+#define OSL20541_PIN_3 26 // not connected
+#define OSL20541_PIN_4 28
+#define OSL20541_PIN_5 30
+#define OSL20541_PIN_6 32
+#define OSL20541_PIN_7 34
+#define OSL20541_PIN_8 36
+#define OSL20541_PIN_9 38
+#define OSL20541_PIN_10 25
+#define OSL20541_PIN_11 27
+#define OSL20541_PIN_12 29
+#define OSL20541_PIN_13 31
+#define OSL20541_PIN_14 33
+#define OSL20541_PIN_15 35
+#define OSL20541_PIN_16 37
+#define OSL20541_PIN_17 39
+#define OSL20541_PIN_18 41
+/*
 #define OSL20541_PIN_1 34
 #define OSL20541_PIN_2 35
 #define OSL20541_PIN_4 36
@@ -27,9 +46,23 @@
 #define OSL20541_PIN_16 48
 #define OSL20541_PIN_17 49
 #define OSL20541_PIN_18 50
+*/
 #endif /* USE_OSL20541 */
 
 #ifdef USE_OSL30561
+#define OSL30561_PIN_1 22
+#define OSL30561_PIN_2 24
+#define OSL30561_PIN_3 26
+#define OSL30561_PIN_4 28
+#define OSL30561_PIN_5 30
+//
+#define OSL30561_PIN_7 23
+#define OSL30561_PIN_8 25
+#define OSL30561_PIN_9 27
+#define OSL30561_PIN_10 29
+#define OSL30561_PIN_11 31
+#define OSL30561_PIN_12 33
+/*
 #define OSL30561_PIN_1 26
 #define OSL30561_PIN_2 25
 #define OSL30561_PIN_3 29
@@ -42,6 +75,7 @@
 #define OSL30561_PIN_10 27
 #define OSL30561_PIN_11 22
 #define OSL30561_PIN_12 32
+*/
 #endif /* USE_OSL30561 */
 
 #include "UnifiedNSegLED.h"
@@ -147,11 +181,14 @@ UnifiedNSegLED nSegLed(&__osl30561, OSL30561_TYPE);
 
 #ifdef USE_DFR0090
 //Pin connected to clock pin (SH_CP) of 74HC595
-#define DFR0090_CLOCK_PIN 3
+//#define DFR0090_CLOCK_PIN 3
+#define DFR0090_CLOCK_PIN 5
 //Pin connected to latch pin (ST_CP) of 74HC595
-#define DFR0090_LATCH_PIN 8
+//#define DFR0090_LATCH_PIN 8
+#define DFR0090_LATCH_PIN 4
 //Pin connected to Data in (DS) of 74HC595
-#define DFR0090_DATA_PIN  9
+//#define DFR0090_DATA_PIN  9
+#define DFR0090_DATA_PIN  6
 //7SegLEDの数
 #define DFR0090_DIGITS    8
 
