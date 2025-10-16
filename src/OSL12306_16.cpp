@@ -33,8 +33,22 @@ uint8_t OSL12306_16::displayOne(uint8_t n, bool dp, char dispChar) {
         } else {
           digitalWrite(_char_pin[i],LOW);
         }
+      } else {
+        if (_pin_mode == OSL12306_16_TYPE_CATHODE_COMMON) {
+          digitalWrite(_char_pin[i],LOW);
+        } else {
+          digitalWrite(_char_pin[i],HIGH);
+        }
       }
       pinState = pinState >> 1;
+    }
+  } else {
+    for (int i= _OSL12306_16_CHAR_PINS -1; i>=0; i--) {
+      if (_pin_mode == OSL12306_16_TYPE_CATHODE_COMMON) {
+        digitalWrite(_char_pin[i],LOW);
+      } else {
+        digitalWrite(_char_pin[i],HIGH);
+      }
     }
   }
   if (dp) {

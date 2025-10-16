@@ -43,6 +43,14 @@ uint8_t OSL20541::displayOne(uint8_t n, bool point, char dispChar) {
       }
       pinState = pinState >> 1;
     }
+  } else {
+    for (int i= _OSL20541_CHAR_PINS -1; i>=0; i--) {
+      if (_pin_mode == OSL20541_TYPE_CATHODE_COMMON) {
+        digitalWrite(_char_pin[i],LOW);
+      } else {
+        digitalWrite(_char_pin[i],HIGH);
+      }
+    }
   }
   if (point) {
     pointOn();
