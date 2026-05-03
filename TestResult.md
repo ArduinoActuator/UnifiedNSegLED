@@ -34,17 +34,17 @@
 
 ### [Grove - 4-Digit Display][Grove4DigitLED]以外のLEDで1桁のもの
 
-手持ちのデバイスが不調で動作確認できていない
+
 
 |機種名|[OSL12306-16-IRA(秋月電子)][OSL12306-16-IRA]|
 |---|---|
-|[Arduino Nano ESP32][NanoESP32]||
-|[Arduino Mega 2560][Mega2560]||
-|[Arduino M0 pro][M0Pro]||
-|[Arduino UNO R4 Minima][UnoR4Minima]||
-|[Arduino Nano 33 IoT][Nano33IoT]||
-|[Arduino Giga R1 Wifi][GigaR1WiFi]||
-|[Ardino MKR Zero][MKRZero]||
+|[Arduino Nano ESP32][NanoESP32]|-|
+|[Arduino Mega 2560][Mega2560]|◯|
+|[Arduino M0 pro][M0Pro]|-|
+|[Arduino UNO R4 Minima][UnoR4Minima]|-|
+|[Arduino Nano 33 IoT][Nano33IoT]|-|
+|[Arduino Giga R1 Wifi][GigaR1WiFi]|◯|
+|[Ardino MKR Zero][MKRZero]|-|
 |[Arduino Nano RP2040 Connect][NanoRP2040Connect]||
 
 
@@ -67,16 +67,16 @@
 ### [Grove - 4-Digit Display][Grove4DigitLED]以外のLEDで2桁以上のもの
 
 
-|機種名|[OSL20541-IR(秋月電子)][OSL20541IR]|[OSL30561-IRA(秋月電子)][OSL30561IRA]|[OSL12306-16-IRA(秋月電子)][OSL12306-16-IRA]|[3-Wire LED Module DFR0090][DFR0090]|
+|機種名|[OSL20541-IR(秋月電子)][OSL20541IR]|[OSL30561-IRA(秋月電子)][OSL30561IRA]|[3-Wire LED Module DFR0090][DFR0090]|
 |---|---|---|---|---|
-|[Arduino Nano ESP32][NanoESP32]|未1|未1|||
-|[Arduino Mega 2560][Mega2560]|◯|◯|||
-|[Arduino M0 pro][M0Pro]|未1|未1|||
-|[Arduino UNO R4 Minima][UnoR4Minima]|未1|未1|||
-|[Arduino Nano 33 IoT][Nano33IoT]|未1|未1|||
-|[Arduino Giga R1 Wifi][GigaR1WiFi]|◯|◯|||
-|[Ardino MKR Zero][MKRZero]|未1|未1|||
-|[Arduino Nano RP2040 Connect][NanoRP2040Connect]|||||
+|[Arduino Nano ESP32][NanoESP32]|未1|未1|✕|
+|[Arduino Mega 2560][Mega2560]|◯|◯|✕|
+|[Arduino M0 pro][M0Pro]|未1|未1|◯|
+|[Arduino UNO R4 Minima][UnoR4Minima]|未1|未1|◯|
+|[Arduino Nano 33 IoT][Nano33IoT]|未1|未1|✕|
+|[Arduino Giga R1 Wifi][GigaR1WiFi]|◯|◯|◯|
+|[Ardino MKR Zero][MKRZero]|未1|未1|✕|
+|[Arduino Nano RP2040 Connect][NanoRP2040Connect]||||
 
 - 1 : ピン数が不足するため，動作確認していない
 

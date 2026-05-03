@@ -183,12 +183,18 @@ UnifiedNSegLED nSegLed(&__osl30561, OSL30561_TYPE);
 //Pin connected to clock pin (SH_CP) of 74HC595
 //#define DFR0090_CLOCK_PIN 3
 #define DFR0090_CLOCK_PIN 5
+//#define DFR0090_CLOCK_PIN D5
+//#define DFR0090_CLOCK_PIN 6
 //Pin connected to latch pin (ST_CP) of 74HC595
 //#define DFR0090_LATCH_PIN 8
 #define DFR0090_LATCH_PIN 4
+//#define DFR0090_LATCH_PIN D4
+//#define DFR0090_LATCH_PIN 5
 //Pin connected to Data in (DS) of 74HC595
 //#define DFR0090_DATA_PIN  9
 #define DFR0090_DATA_PIN  6
+//#define DFR0090_DATA_PIN  D6
+//#define DFR0090_DATA_PIN  4
 //7SegLEDの数
 #define DFR0090_DIGITS    8
 

@@ -1,7 +1,7 @@
 
 //#define USE_OSL12306_16
-//#define USE_OSL30561
-#define USE_OSL20541
+#define USE_OSL30561
+//#define USE_OSL20541
 
 
 
